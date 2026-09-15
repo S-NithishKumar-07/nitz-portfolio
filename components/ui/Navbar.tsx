@@ -7,8 +7,7 @@ const navLinks = [
   { href: "#about", label: "About" },
   { href: "#skills", label: "Skills" },
   { href: "#projects", label: "Projects" },
-  { href: "#creative", label: "Creative" },
-  { href: "#blog", label: "Blog" },
+  { href: "#photos", label: "Gallery" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -20,9 +19,7 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
-
-      // Active section detection
-      const sections = ["about", "skills", "projects", "creative", "blog", "contact"];
+      const sections = ["about", "skills", "projects", "photos", "contact"];
       const offsets = sections.map((id) => {
         const el = document.getElementById(id);
         return el ? { id, top: el.getBoundingClientRect().top } : { id, top: 999 };
@@ -49,72 +46,81 @@ export default function Navbar() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className={`fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ${scrolled ? 'top-4 w-[95%] md:w-[800px] rounded-full' : 'top-0 w-full rounded-none'}`}
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
         style={{
-          background: scrolled
-            ? "rgba(20, 20, 25, 0.75)"
-            : "transparent",
-          backdropFilter: scrolled ? "blur(24px) saturate(150%)" : "none",
-          WebkitBackdropFilter: scrolled ? "blur(24px) saturate(150%)" : "none",
-          border: scrolled ? "1px solid rgba(255,255,255,0.1)" : "none",
-          boxShadow: scrolled ? "0 10px 40px -10px rgba(0,0,0,0.5)" : "none",
+          background: scrolled ? "rgba(252, 252, 252, 0.95)" : "transparent",
+          backdropFilter: scrolled ? "blur(12px)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
+          borderBottom: scrolled ? "1px solid var(--border-subtle)" : "1px solid transparent",
         }}
       >
-        <div className={`mx-auto flex items-center justify-between ${scrolled ? 'px-6 py-3' : 'px-6 py-4 max-w-7xl'}`}>
-          {/* Logo */}
-          <motion.a
-            href="#"
-            className={`font-black tracking-tighter ${scrolled ? 'text-lg' : 'text-xl'}`}
-            onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-            whileHover={{ scale: 1.05 }}
-          >
-            <span className="gradient-text-cyan">WN</span>
-            <span style={{ color: "rgba(255,255,255,0.4)", marginLeft: "2px" }}>.</span>
-          </motion.a>
+        <div className="max-w-[1400px] mx-auto flex items-center justify-between px-6 py-4 md:px-12">
+          
+          {/* Left: Logo */}
+          <div className="flex-1 flex justify-start">
+            <motion.a
+              href="#"
+              className="font-black tracking-tighter text-2xl font-heading uppercase"
+              onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+              whileHover={{ scale: 1.02 }}
+              style={{ color: "var(--text-primary)" }}
+            >
+              WN<span style={{ color: "var(--text-muted)", marginLeft: "1px" }}>.</span>
+            </motion.a>
+          </div>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
+          {/* Center: Desktop Nav */}
+          <div className="hidden md:flex flex-1 justify-center items-center gap-8">
             {navLinks.map((link) => (
               <button
                 key={link.href}
                 onClick={() => scrollTo(link.href)}
-                className="relative text-sm font-medium transition-colors duration-300 group"
+                className="relative text-[11px] font-bold uppercase tracking-widest transition-colors duration-300 font-sans"
                 style={{
                   color: activeSection === link.href.replace("#", "")
-                    ? "var(--accent-cyan)"
-                    : "rgba(255,255,255,0.6)",
+                    ? "var(--text-primary)"
+                    : "var(--text-muted)",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
                 }}
               >
                 {link.label}
-                <span
-                  className="absolute -bottom-1 left-0 h-px transition-all duration-300 group-hover:w-full"
-                  style={{
-                    width: activeSection === link.href.replace("#", "") ? "100%" : "0",
-                    background: "var(--accent-cyan)",
-                  }}
-                />
+                {activeSection === link.href.replace("#", "") && (
+                  <motion.span
+                    layoutId="activeNavDot"
+                    className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
+                    style={{ background: "var(--text-primary)" }}
+                  />
+                )}
               </button>
             ))}
           </div>
 
-          {/* CTA */}
-          <div className="hidden md:flex items-center gap-3">
+          {/* Right: CTA */}
+          <div className="hidden md:flex flex-1 justify-end items-center">
             <button
               onClick={() => scrollTo("#contact")}
-              className="btn-primary text-sm"
-              style={{ padding: "10px 22px" }}
+              className="text-[11px] font-bold uppercase tracking-widest flex items-center gap-2"
+              style={{
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                color: "var(--text-primary)",
+              }}
             >
-              Hire Me
+              GET IN TOUCH <span style={{ transition: "transform 0.2s" }} className="hover:translate-x-1">→</span>
             </button>
           </div>
 
-          {/* Mobile menu toggle */}
+          {/* Mobile toggle */}
           <button
-            className="md:hidden text-white"
+            className="md:hidden flex-1 flex justify-end"
+            style={{ color: "var(--text-primary)", background: "none", border: "none", cursor: "pointer" }}
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
           >
-            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </motion.nav>
@@ -123,22 +129,24 @@ export default function Navbar() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 flex flex-col items-center justify-center"
-            style={{ background: "rgba(5,5,8,0.97)", backdropFilter: "blur(20px)" }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8"
+            style={{
+              background: "var(--bg-primary)",
+            }}
           >
             {navLinks.map((link, i) => (
               <motion.button
                 key={link.href}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.07 }}
+                transition={{ delay: i * 0.05 }}
                 onClick={() => scrollTo(link.href)}
-                className="text-3xl font-bold py-4 transition-colors duration-300 hover:text-cyan-400"
-                style={{ color: "rgba(255,255,255,0.8)" }}
+                className="text-3xl font-heading font-black tracking-tighter uppercase transition-colors duration-300"
+                style={{ color: "var(--text-primary)", background: "none", border: "none", cursor: "pointer" }}
               >
                 {link.label}
               </motion.button>
@@ -146,11 +154,11 @@ export default function Navbar() {
             <motion.button
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
+              transition={{ delay: 0.3 }}
               onClick={() => scrollTo("#contact")}
-              className="btn-primary mt-8"
+              className="mt-8 px-8 py-3 border border-[var(--text-primary)] rounded-full text-xs font-bold uppercase tracking-widest text-[var(--text-primary)]"
             >
-              Hire Me
+              GET IN TOUCH →
             </motion.button>
           </motion.div>
         )}

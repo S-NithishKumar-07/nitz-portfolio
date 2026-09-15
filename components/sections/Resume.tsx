@@ -1,117 +1,82 @@
 "use client";
 import { motion } from "framer-motion";
-import { Download, Trophy, GraduationCap, Sparkles } from "lucide-react";
-import { education, achievements, skills } from "@/lib/data";
-import { useBreakpoint } from "@/hooks/useBreakpoint";
+import { Download } from "lucide-react";
+import { education } from "@/lib/data";
 
 export default function Resume() {
-  const { isMobile } = useBreakpoint();
-
   return (
-    <section id="resume" style={{ background: "var(--bg-primary)", padding: isMobile ? "60px 0" : "100px 0", position: "relative", overflow: "hidden" }}>
-      <div style={{ position: "absolute", bottom: 0, right: 0, width: "300px", height: "300px", borderRadius: "50%", filter: "blur(150px)", opacity: 0.05, background: "var(--accent-gold)", pointerEvents: "none" }} />
+    <section id="resume" className="relative bg-[var(--bg-primary)] border-b border-[var(--border-subtle)] pt-32 pb-24 md:pt-[140px] md:pb-[100px]">
+      <div className="e-container">
 
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 40px" }}>
-        {/* Header */}
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.7 }}
-          style={{ textAlign: "center", marginBottom: "56px" }}>
-          <span className="section-label" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", marginBottom: "16px" }}>
-            <Sparkles size={12} /> Resume
-          </span>
-          <h2 className="text-3xl md:text-4xl font-black">
-            My <span className="gradient-text-gold">Resume</span>
-          </h2>
-          <p style={{ marginTop: "12px", fontSize: "14px", color: "var(--text-secondary)", maxWidth: "400px", margin: "12px auto 0" }}>
-            A snapshot of my journey, education, and achievements
-          </p>
-          <motion.a href="/resume.pdf" download className="btn-primary"
-            whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-            style={{ display: "inline-flex", alignItems: "center", gap: "8px", marginTop: "24px" }}
-            id="resume-download">
-            <Download size={16} /> Download Full Resume (PDF)
-          </motion.a>
-        </motion.div>
-
-        {/* Education + Achievements — 2 col on desktop, 1 col on mobile */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-          gap: isMobile ? "20px" : "32px",
-          marginBottom: "32px",
-        }}>
-          {/* Education */}
-          <motion.div initial={{ opacity: 0, x: isMobile ? 0 : -30 }}
-            whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+        {/* Editorial Header */}
+        <div className="e-grid-12 items-end mb-24 md:mb-32 border-b border-[var(--border-subtle)] pb-10">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "20px", padding: isMobile ? "24px" : "36px", backdropFilter: "blur(20px)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "28px" }}>
-              <GraduationCap size={20} style={{ color: "var(--accent-cyan)" }} />
-              <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#fff", margin: 0 }}>Education</h3>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-              {education.map((edu, i) => (
-                <div key={i} style={{ display: "flex", gap: "16px" }}>
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flexShrink: 0 }}>
-                    <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "var(--accent-cyan)", boxShadow: "0 0 10px rgba(0,217,255,0.5)", flexShrink: 0, marginTop: "4px" }} />
-                    {i < education.length - 1 && (
-                      <div style={{ width: "1px", flex: 1, background: "rgba(0,217,255,0.15)", margin: "6px 0" }} />
-                    )}
-                  </div>
-                  <div style={{ paddingBottom: "8px" }}>
-                    <p style={{ fontSize: "14px", fontWeight: 700, color: "#fff", margin: 0, lineHeight: 1.4 }}>{edu.degree}</p>
-                    <p style={{ fontSize: "13px", color: "var(--accent-cyan)", margin: "6px 0 4px" }}>{edu.institution}</p>
-                    <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
-                      <span style={{ fontSize: "12px", color: "var(--text-muted)" }}>{edu.year}</span>
-                      {edu.grade && (
-                        <span style={{ fontSize: "12px", fontWeight: 700, color: "var(--accent-gold)" }}>{edu.grade}</span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
+            className="col-span-12 md:col-span-6 text-4xl sm:text-5xl font-heading font-bold uppercase tracking-tighter text-[var(--text-primary)]"
+          >
+            Education
+          </motion.h2>
 
-          {/* Achievements */}
-          <motion.div initial={{ opacity: 0, x: isMobile ? 0 : 30 }}
-            whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "20px", padding: isMobile ? "24px" : "36px", backdropFilter: "blur(20px)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "28px" }}>
-              <Trophy size={20} style={{ color: "var(--accent-gold)" }} />
-              <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#fff", margin: 0 }}>Achievements</h3>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-              {achievements.map((ach, i) => (
-                <motion.div key={i} initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-                  transition={{ delay: 0.1 + i * 0.08 }}
-                  style={{ padding: "14px 18px", borderRadius: "12px", fontSize: "13px", lineHeight: 1.6, background: "rgba(255,215,0,0.04)", border: "1px solid rgba(255,215,0,0.1)", color: "rgba(255,255,255,0.8)" }}>
-                  {ach}
-                </motion.div>
-              ))}
-            </div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="col-span-12 md:col-span-6 flex justify-start md:justify-end mt-6 md:mt-0"
+          >
+            <a
+              href="/resume.pdf"
+              download
+              className="flex items-center gap-2 px-6 py-3 border border-[var(--border-subtle)] text-[var(--text-primary)] text-[11px] font-bold uppercase tracking-widest rounded-full hover:border-[var(--text-primary)] transition-all duration-300"
+              id="resume-download"
+            >
+              <Download size={14} /> Download Resume
+            </a>
           </motion.div>
         </div>
 
+        {/* Education — table rows */}
+        <div className="flex flex-col border-t border-[var(--border-subtle)]">
+          {education.map((edu, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.08 }}
+              className="e-grid-12 py-14 md:py-[80px] border-b border-[var(--border-subtle)] items-start group hover:bg-[rgba(0,0,0,0.015)] transition-colors"
+            >
+              {/* Left: Year (3 cols) */}
+              <div className="col-span-12 md:col-span-3 lg:col-span-2">
+                <span className="metadata text-[var(--text-primary)]">
+                  {edu.year}
+                </span>
+              </div>
 
-        {/* Core Skills */}
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }}
-          style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "20px", padding: isMobile ? "24px" : "36px", backdropFilter: "blur(20px)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "20px" }}>
-            <Sparkles size={18} style={{ color: "var(--accent-purple)" }} />
-            <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#fff", margin: 0 }}>Core Skills</h3>
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-            {skills.filter((cat) => cat.category !== "Languages").flatMap((cat) => cat.items.map((s) => s.name)).map((name) => (
-              <span key={name} style={{ fontSize: "12px", padding: "6px 14px", borderRadius: "8px", background: "rgba(139,92,246,0.08)", border: "1px solid rgba(139,92,246,0.15)", color: "rgba(255,255,255,0.7)" }}>
-                {name}
-              </span>
-            ))}
-          </div>
-        </motion.div>
+              {/* Middle: Degree & Institution (7 cols) */}
+              <div className="col-span-12 md:col-span-6 lg:col-span-8 mt-6 md:mt-0">
+                <h3 className="text-2xl md:text-3xl font-serif italic text-[var(--text-primary)] leading-tight mb-4">
+                  {edu.degree}
+                </h3>
+                <p className="metadata text-[var(--text-secondary)]">
+                  {edu.institution}
+                </p>
+              </div>
+
+              {/* Right: Grade (2 cols) */}
+              <div className="col-span-12 md:col-span-3 lg:col-span-2 flex justify-start md:justify-end mt-4 md:mt-0">
+                {edu.grade && (
+                  <span className="metadata border border-[var(--border-subtle)] px-3 py-1.5 rounded-full text-[var(--text-primary)]">
+                    {edu.grade}
+                  </span>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

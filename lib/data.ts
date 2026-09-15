@@ -92,10 +92,6 @@ export const skills = [
       { name: "Tamil", level: 100 },
       { name: "English", level: 100 },
       { name: "Malayalam", level: 80 },
-      { name: "Kannada", level: 40 },
-      { name: "Telugu", level: 40 },
-      { name: "Hindi", level: 30 },
-      { name: "German", level: 40 },
     ],
   },
 ];
@@ -306,6 +302,12 @@ export const education = [
     year: "2020 – 2022",
     grade: "",
   },
+  {
+    degree: "MERN Stack Development",
+    institution: "Career Lines",
+    year: "Ongoing",
+    grade: "Course / Training",
+  },
 ];
 
 export const experience = [
@@ -316,7 +318,7 @@ export const experience = [
     duration: "6 Months",
     type: "Internship",
     icon: "💻",
-    color: "#00D9FF",
+    color: "#3b82f6",
     description:
       "Worked as a Software Developer Intern at Ultra GITS, Chennai. Contributed to real-world web development projects, collaborated with senior developers, and gained hands-on experience in the software development lifecycle.",
     highlights: [
@@ -332,7 +334,7 @@ export const experience = [
     duration: "4 Years",
     type: "Part-Time",
     icon: "🎬",
-    color: "#FF9F43",
+    color: "#f59e0b",
     description:
       "Worked part-time at Jai Studio for 4 years as a Cinematographer, Photographer, and Video Editor. Handled end-to-end visual production for events, short films, and commercial shoots.",
     highlights: [
@@ -342,29 +344,13 @@ export const experience = [
     ],
   },
   {
-    role: "MERN Stack Development",
-    company: "Career Lines",
-    location: "Tamil Nadu, India",
-    duration: "Ongoing",
-    type: "Course / Training",
-    icon: "📚",
-    color: "#8B5CF6",
-    description:
-      "Currently pursuing an intensive MERN Stack Development course at Career Lines, sharpening skills in MongoDB, Express.js, React.js, and Node.js to build production-ready full-stack web applications.",
-    highlights: [
-      "In-depth training on MongoDB, Express.js, React.js & Node.js",
-      "Building and deploying full-stack projects with REST APIs",
-      "Learning best practices in authentication, state management, and deployment",
-    ],
-  },
-  {
     role: "Freelance Developer",
     company: "Independent",
     location: "Remote",
     duration: "Ongoing",
     type: "Freelance",
     icon: "🚀",
-    color: "#2DD4BF",
+    color: "#0ea5e9",
     description:
       "Successfully delivered 3 freelance projects as an independent developer, working directly with clients to design, develop, and deploy custom web solutions tailored to their business needs.",
     highlights: [
@@ -380,29 +366,13 @@ export const experience = [
     duration: "2023",
     type: "Film Production",
     icon: "🎥",
-    color: "#EAB308",
+    color: "#6366f1",
     description:
       "Worked as a Junior Artist in the Tamil feature film Jigarthanda DoubleX. This opportunity provided incredible exposure to large-scale movie production and professional cinematography.",
     highlights: [
       "Directed by acclaimed filmmaker Karthik Subburaj",
       "Gained on-set experience in a major feature film production",
       "Observed professional cinematography, lighting, and direction up close",
-    ],
-  },
-  {
-    role: "Junior Artist",
-    company: "Viduthalai Part 2",
-    location: "Tamil Nadu",
-    duration: "Upcoming",
-    type: "Film Production",
-    icon: "🎬",
-    color: "#EF4444",
-    description:
-      "Worked as a Junior Artist in the highly anticipated Tamil feature film Viduthalai Part 2. Experienced the rigorous production environment of a major film.",
-    highlights: [
-      "Directed by the visionary filmmaker Vetrimaaran",
-      "Experienced a large-scale period drama production environment",
-      "Learned about professional filmmaking processes and on-set coordination",
     ],
   },
 ];

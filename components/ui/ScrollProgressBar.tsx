@@ -20,10 +20,10 @@ export default function ScrollProgressBar() {
           left: 0,
           right: 0,
           height: "3px",
-          background: "linear-gradient(90deg, #00D9FF, #8B5CF6, #FFD700)",
+          background: "linear-gradient(90deg, #3b82f6, #6366f1, #0ea5e9)",
           transformOrigin: "0%",
           zIndex: 99999,
-          boxShadow: "0 0 10px rgba(0,217,255,0.8), 0 0 20px rgba(139,92,246,0.4)",
+          boxShadow: "0 0 10px rgba(59,130,246,0.5), 0 0 20px rgba(99,102,241,0.3)",
         }}
       />
       {/* Glow dot at right edge */}
@@ -47,8 +47,8 @@ export default function ScrollProgressBar() {
           width: "8px",
           height: "8px",
           borderRadius: "50%",
-          background: "#FFD700",
-          boxShadow: "0 0 12px #FFD700, 0 0 24px #FFD700",
+          background: "#3b82f6",
+          boxShadow: "0 0 12px #3b82f6, 0 0 24px #6366f1",
           marginTop: "2px",
           flexShrink: 0,
         }} />

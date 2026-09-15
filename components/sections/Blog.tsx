@@ -10,122 +10,87 @@ export default function Blog() {
   return (
     <section
       id="blog"
+      className="relative bg-[var(--bg-primary)] border-t border-[var(--border-subtle)]"
       style={{
-        background: "var(--bg-secondary)",
-        padding: "100px 0",
-        position: "relative",
-        overflow: "hidden",
+        padding: isMobile ? "80px 0" : "120px 0",
       }}
     >
-      <div
-        className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: "linear-gradient(90deg, transparent, rgba(0,217,255,0.3), transparent)" }}
-      />
-
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 40px" }}>
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          style={{ textAlign: "center", marginBottom: "56px" }}
+          className="text-center mb-16"
         >
-          <span className="section-label flex items-center justify-center gap-2 mb-4">
-            <BookOpen size={12} />
-            Writing
+          <span className="section-label mb-4 flex items-center justify-center gap-2">
+            <BookOpen size={11} /> WRITING
           </span>
-          <h2 className="text-3xl md:text-4xl font-black">
-            Blog &amp; <span className="gradient-text-cyan">Articles</span>
+          <h2 className="text-4xl sm:text-5xl font-bold font-serif mb-4 text-[var(--text-primary)]">
+            Blog &amp; <span className="italic font-normal">Articles</span>
           </h2>
-          <p style={{ marginTop: "12px", fontSize: "14px", color: "var(--text-secondary)", maxWidth: "400px", margin: "12px auto 0" }}>
+          <p className="text-sm text-[var(--text-secondary)] max-w-sm mx-auto">
             Thoughts on development, design, and visual storytelling
           </p>
         </motion.div>
 
         {/* Blog cards */}
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : isTablet ? "repeat(2, 1fr)" : "repeat(3, 1fr)", gap: "28px", alignItems: "stretch" }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogPosts.map((post, i) => (
             <motion.article
               key={post.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.12 }}
-              whileHover={{ y: -6, transition: { duration: 0.2 } }}
-              style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.07)",
-                borderRadius: "16px",
-                overflow: "hidden",
-                display: "flex",
-                flexDirection: "column",
-                cursor: "pointer",
-                backdropFilter: "blur(20px)",
-              }}
+              transition={{ duration: 0.6, delay: i * 0.05 }}
+              className="bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-xl overflow-hidden flex flex-col justify-between shadow-sm hover:border-[var(--text-primary)] transition-colors duration-300"
             >
-              {/* Top emoji banner — fixed height for all cards */}
-              <div
-                style={{
-                  height: "100px",
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "44px",
-                  flexShrink: 0,
-                  background: "linear-gradient(135deg, rgba(0,217,255,0.07) 0%, rgba(139,92,246,0.07) 100%)",
-                  borderBottom: "1px solid rgba(255,255,255,0.05)",
-                }}
-              >
-                {post.icon}
+              <div>
+                {/* Top banner */}
+                <div
+                  className="h-28 w-full flex items-center justify-center text-4xl bg-[var(--bg-secondary)] border-b border-[var(--border-subtle)]"
+                >
+                  {post.icon}
+                </div>
+
+                {/* Card body */}
+                <div className="p-6 md:p-8 flex flex-col">
+                  {/* Category + date */}
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-[var(--bg-secondary)] border border-[var(--border-subtle)] text-[var(--text-secondary)]">
+                      {post.category}
+                    </span>
+                    <span className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider">{post.date}</span>
+                  </div>
+
+                  <h3 className="text-lg font-bold font-serif text-[var(--text-primary)] mb-3 leading-snug">
+                    {post.title}
+                  </h3>
+
+                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed line-clamp-3">
+                    {post.excerpt}
+                  </p>
+                </div>
               </div>
 
-              {/* Card body — grows to fill equal height */}
-              <div style={{ padding: "24px", display: "flex", flexDirection: "column", flex: 1 }}>
-                {/* Category + date */}
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "14px" }}>
-                  <span style={{
-                    fontSize: "11px", padding: "4px 12px", borderRadius: "999px", fontWeight: 600,
-                    background: "rgba(0,217,255,0.08)", color: "var(--accent-cyan)",
-                    border: "1px solid rgba(0,217,255,0.15)",
-                  }}>
-                    {post.category}
-                  </span>
-                  <span style={{ fontSize: "11px", color: "var(--text-muted)" }}>{post.date}</span>
+              {/* Footer */}
+              <div className="px-6 pb-6 md:px-8 md:pb-8 pt-4 border-t border-[var(--border-subtle)] flex items-center justify-between bg-[var(--bg-secondary)]/30">
+                <div className="flex items-center gap-1.5 text-xs text-[var(--text-muted)] font-medium">
+                  <Clock size={12} />
+                  <span>{post.readTime}</span>
                 </div>
-
-                <h3 style={{ fontSize: "14px", fontWeight: 700, color: "#fff", marginBottom: "10px", lineHeight: 1.5 }}>
-                  {post.title}
-                </h3>
-
-                <p style={{ fontSize: "12px", lineHeight: 1.75, color: "var(--text-secondary)", flex: 1, marginBottom: "20px" }}>
-                  {post.excerpt}
-                </p>
-
-                {/* Footer */}
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "16px", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "6px", color: "var(--text-muted)" }}>
-                    <Clock size={11} />
-                    <span style={{ fontSize: "11px" }}>{post.readTime}</span>
-                  </div>
-                  <button
-                    style={{ display: "flex", alignItems: "center", gap: "4px", fontSize: "12px", fontWeight: 600, color: "var(--accent-cyan)", background: "none", border: "none", cursor: "pointer" }}
-                    id={`blog-read-${post.id}`}
-                  >
-                    Read More <ArrowRight size={12} />
-                  </button>
-                </div>
+                <button
+                  className="flex items-center gap-1 text-xs font-bold text-[var(--text-primary)] hover:underline bg-none border-none cursor-pointer"
+                  id={`blog-read-${post.id}`}
+                >
+                  READ MORE <ArrowRight size={12} />
+                </button>
               </div>
             </motion.article>
           ))}
         </div>
       </div>
-
-      <div
-        className="absolute bottom-0 left-0 right-0 h-px"
-        style={{ background: "linear-gradient(90deg, transparent, rgba(139,92,246,0.3), transparent)" }}
-      />
     </section>
   );
 }

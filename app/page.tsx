@@ -9,11 +9,11 @@ import ScrollProgressBar from "@/components/ui/ScrollProgressBar";
 // Heavy UI — lazy loaded, client-only
 const CustomCursor = dynamic(() => import("@/components/ui/CustomCursor"), { ssr: false });
 const FloatingWidgets = dynamic(() => import("@/components/ui/FloatingWidgets"), { ssr: false });
-const FloatingAvatar = dynamic(() => import("@/components/ui/FloatingAvatar"), { ssr: false });
 const ChatBot = dynamic(() => import("@/components/ui/ChatBot"), { ssr: false });
 
 // Sections — lazy loaded for faster initial paint
 import Hero from "@/components/sections/Hero";
+import BrandMarquee from "@/components/sections/BrandMarquee";
 const About        = dynamic(() => import("@/components/sections/About"));
 const Skills       = dynamic(() => import("@/components/sections/Skills"));
 const Experience   = dynamic(() => import("@/components/sections/Experience"));
@@ -35,6 +35,7 @@ export default function HomePage() {
 
       <main>
         <Hero />
+        <BrandMarquee />
         <About />
         <Skills />
         <Experience />
@@ -47,7 +48,6 @@ export default function HomePage() {
       </main>
 
       <ChatBot />
-      <FloatingAvatar />
     </>
   );
 }

@@ -12,113 +12,82 @@ export default function About() {
   return (
     <section
       id="about"
+      className="relative bg-[var(--bg-primary)] border-t border-[var(--border-subtle)]"
       style={{
-        background: "var(--bg-primary)",
-        padding: isMobile ? "60px 0" : "100px 0",
-        position: "relative",
-        overflow: "hidden",
+        padding: isMobile ? "80px 0" : "120px 0",
       }}
     >
-      <div style={{
-        position: "absolute", right: 0, top: "50%",
-        transform: "translateY(-50%)",
-        width: "350px", height: "350px", borderRadius: "50%",
-        filter: "blur(120px)", opacity: 0.05,
-        background: "var(--accent-cyan)", pointerEvents: "none",
-      }} />
-
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 40px" }}>
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div style={{
           display: "grid",
-          gridTemplateColumns: isSmall ? "1fr" : "1fr 1.4fr",
-          gap: isMobile ? "40px" : isTablet ? "48px" : "80px",
+          gridTemplateColumns: isSmall ? "1fr" : "1fr 1.3fr",
+          gap: isMobile ? "48px" : "80px",
           alignItems: "center",
         }}>
-          {/* LEFT — Photo card */}
+          {/* LEFT — Polaroid-style Photo Card */}
           <motion.div
-            initial={{ opacity: 0, x: isSmall ? 0 : -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            style={{ position: "relative" }}
+            className="flex flex-col items-center"
           >
-            <div style={{
-              position: "relative",
-              borderRadius: "24px",
-              overflow: "hidden",
-              aspectRatio: "4/5",
-              maxWidth: isMobile ? "260px" : "360px",
-              margin: "0 auto",
-              background: "linear-gradient(135deg, rgba(0,217,255,0.08), rgba(139,92,246,0.08))",
-              border: "1px solid rgba(0,217,255,0.15)",
-              boxShadow: "0 30px 80px rgba(0,0,0,0.4), 0 0 40px rgba(0,217,255,0.06)",
-            }}>
-              <Image src="/gallery/48.webp" alt="Nithishkumar" fill sizes="360px"
-                style={{ objectFit: "cover", objectPosition: "center top" }} />
-              <div style={{
-                position: "absolute", bottom: 0, left: 0, right: 0, height: "40%",
-                background: "linear-gradient(to top, rgba(8,8,16,0.9), transparent)",
-              }} />
-              <div style={{ position: "absolute", bottom: "24px", left: "24px" }}>
-                <p style={{ fontSize: "18px", fontWeight: 800, color: "#fff", margin: 0 }}>Nithishkumar</p>
-                <p style={{ fontSize: "11px", color: "var(--accent-cyan)", margin: "4px 0 0" }}>
-                  Developer · Photographer · Filmmaker
-                </p>
+            <div className="w-full max-w-[340px] bg-[var(--bg-card)] border border-[var(--border-subtle)] p-4 pb-12 shadow-sm rounded-sm">
+              <div className="relative aspect-[4/5] w-full bg-[var(--bg-secondary)] overflow-hidden rounded-sm">
+                <Image
+                  src="/gallery/48.webp"
+                  alt="Nithishkumar"
+                  fill
+                  sizes="340px"
+                  style={{ objectFit: "cover", objectPosition: "center top", filter: "grayscale(15%)" }}
+                />
               </div>
-              <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                style={{
-                  position: "absolute", top: "20px", right: "20px",
-                  padding: "8px 14px", borderRadius: "12px", fontSize: "12px", fontWeight: 600,
-                  background: "rgba(0,217,255,0.15)", border: "1px solid rgba(0,217,255,0.3)",
-                  color: "var(--accent-cyan)", backdropFilter: "blur(10px)",
-                }}>
-                ⚡ MERN Stack
-              </motion.div>
-              <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                style={{
-                  position: "absolute", top: "68px", right: "20px",
-                  padding: "8px 14px", borderRadius: "12px", fontSize: "12px", fontWeight: 600,
-                  background: "rgba(139,92,246,0.15)", border: "1px solid rgba(139,92,246,0.3)",
-                  color: "var(--accent-purple)", backdropFilter: "blur(10px)",
-                }}>
-                📸 Visual Artist
-              </motion.div>
+              <div className="mt-6 text-center font-serif italic text-lg text-[var(--text-primary)]">
+                Nithishkumar
+              </div>
             </div>
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ delay: 0.4 }}
-              style={{ display: "flex", alignItems: "center", gap: "8px", justifyContent: "center", marginTop: "20px", color: "var(--text-secondary)" }}>
-              <MapPin size={14} style={{ color: "var(--accent-cyan)" }} />
-              <span style={{ fontSize: "14px" }}>{personalInfo.location}</span>
-            </motion.div>
+            
+            <div className="flex items-center gap-2 mt-6 text-[var(--text-muted)] text-sm">
+              <MapPin size={14} className="text-[var(--accent-blue)]" />
+              <span>{personalInfo.location}</span>
+            </div>
           </motion.div>
 
-          {/* RIGHT — Content */}
-          <motion.div initial={{ opacity: 0, x: isSmall ? 0 : 50 }}
-            whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.15 }}>
-            <span className="section-label" style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "20px" }}>
-              <Sparkles size={12} /> About Me
+          {/* RIGHT — Editorial Content */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="flex flex-col items-start"
+          >
+            <span className="section-label mb-4 flex items-center gap-2">
+              <Sparkles size={11} /> ABOUT ME
             </span>
-            <h2 style={{ fontSize: isMobile ? "1.8rem" : "clamp(1.8rem,3.5vw,2.8rem)", fontWeight: 900, lineHeight: 1.2, marginBottom: "24px" }}>
-              Developer by <span className="gradient-text-cyan">Code</span>,<br />
-              Storyteller by <span className="gradient-text-gold">Lens</span>
+            
+            <h2 className="text-4xl sm:text-5xl font-bold font-serif leading-tight mb-8 text-[var(--text-primary)]">
+              Developer by <span className="italic font-normal">Code</span>,<br />
+              Storyteller by <span className="italic font-normal">Lens</span>
             </h2>
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px", fontSize: "14px", lineHeight: 1.8, color: "var(--text-secondary)", marginBottom: "32px" }}>
+            
+            <div className="flex flex-col gap-6 text-[var(--text-secondary)] text-base leading-relaxed mb-10 font-sans">
               {personalInfo.about.split("\n\n").filter(Boolean).map((p, i) => (
-                <p key={i} style={{ margin: 0 }}>{p.trim()}</p>
+                <p key={i}>{p.trim()}</p>
               ))}
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
-              <motion.div whileHover={{ scale: 1.03, y: -2 }} style={{ padding: "20px", borderRadius: "16px", background: "rgba(0,217,255,0.05)", border: "1px solid rgba(0,217,255,0.12)" }}>
-                <Code2 size={20} style={{ color: "var(--accent-cyan)", marginBottom: "8px" }} />
-                <p style={{ fontSize: "14px", fontWeight: 700, color: "#fff", margin: 0 }}>Developer</p>
-                <p style={{ fontSize: "12px", color: "var(--text-muted)", marginTop: "6px" }}>MERN Stack · Full-Stack · APIs</p>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.03, y: -2 }} style={{ padding: "20px", borderRadius: "16px", background: "rgba(139,92,246,0.05)", border: "1px solid rgba(139,92,246,0.12)" }}>
-                <Camera size={20} style={{ color: "var(--accent-purple)", marginBottom: "8px" }} />
-                <p style={{ fontSize: "14px", fontWeight: 700, color: "#fff", margin: 0 }}>Visual Artist</p>
-                <p style={{ fontSize: "12px", color: "var(--text-muted)", marginTop: "6px" }}>Photography · Cinematography</p>
-              </motion.div>
+
+            {/* Split Skills highlight */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
+              <div className="p-6 bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-lg">
+                <Code2 size={24} className="text-[var(--text-primary)] mb-4" />
+                <h3 className="text-lg font-bold font-serif mb-2 text-[var(--text-primary)]">Developer</h3>
+                <p className="text-sm text-[var(--text-secondary)]">MERN Stack · React · Node.js · APIs</p>
+              </div>
+              <div className="p-6 bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-lg">
+                <Camera size={24} className="text-[var(--text-primary)] mb-4" />
+                <h3 className="text-lg font-bold font-serif mb-2 text-[var(--text-primary)]">Visual Artist</h3>
+                <p className="text-sm text-[var(--text-secondary)]">Photography · Cinematography · Post-Production</p>
+              </div>
             </div>
           </motion.div>
         </div>
