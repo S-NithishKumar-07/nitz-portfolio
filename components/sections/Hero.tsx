@@ -43,7 +43,7 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden bg-[var(--bg-primary)] border-b border-[var(--border-subtle)]">
       <div className="e-container w-full h-full flex flex-col justify-center">
-        <div className="e-grid-12 items-center w-full">
+        <div className="e-grid-12 items-center w-full gap-y-20 lg:gap-y-0">
           
           {/* Left Column: Text (Spans 7 cols on desktop) */}
           <motion.div
@@ -61,7 +61,7 @@ export default function Hero() {
             {/* Name */}
             <motion.h1
               variants={itemVariants}
-              className="heading-primary mb-12"
+              className="heading-primary mb-10 lg:mb-12"
               style={{ color: "var(--text-primary)" }}
             >
               {personalInfo.name}
@@ -69,7 +69,7 @@ export default function Hero() {
             </motion.h1>
 
             {/* Stacked Roles — scroll-parallax bands */}
-            <motion.div variants={itemVariants} className="flex flex-col gap-0 mb-12 w-full overflow-hidden border-t border-[var(--border-subtle)]">
+            <motion.div variants={itemVariants} className="flex flex-col gap-0 mb-10 lg:mb-12 w-full overflow-hidden border-t border-[var(--border-subtle)]">
               {roleLines.map(({ text, x }, idx) => (
                 <motion.p
                   key={text}
@@ -82,7 +82,7 @@ export default function Hero() {
             </motion.div>
 
             {/* CTA Buttons */}
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-6 items-center">
+            <motion.div variants={itemVariants} className="flex flex-wrap gap-4 lg:gap-6 items-center">
               <button
                 onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
                 className="px-8 py-3 bg-[var(--text-primary)] text-[var(--bg-primary)] rounded-full text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:bg-black transition-colors"
@@ -99,7 +99,7 @@ export default function Hero() {
           </motion.div>
 
           {/* Right Column: Hero Image (Spans 5 cols on desktop) */}
-          <div className="col-span-12 lg:col-span-5 flex items-center justify-center lg:justify-end relative mt-16 lg:mt-0">
+          <div className="col-span-12 lg:col-span-5 flex items-center justify-center lg:justify-end relative mt-8 lg:mt-0">
             
             {/* Rotating text ring */}
             <motion.div

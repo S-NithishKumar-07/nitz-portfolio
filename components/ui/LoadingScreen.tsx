@@ -81,7 +81,7 @@ export default function LoadingScreen() {
           </motion.div>
 
           {/* Center: "Portfolio" in giant serif italic */}
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
             <motion.h1
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -90,6 +90,14 @@ export default function LoadingScreen() {
             >
               Portfolio
             </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.4, ease: [0.25, 1, 0.5, 1] }}
+              className="mt-4 text-[10px] md:text-xs font-bold tracking-widest text-[var(--text-primary,#1a1a1a)] opacity-60 uppercase text-center px-4"
+            >
+              For a better experience, view on a Laptop/PC or in Landscape mode
+            </motion.p>
           </div>
 
           {/* Bottom: Travelling progress number — moves left → right with progress */}
