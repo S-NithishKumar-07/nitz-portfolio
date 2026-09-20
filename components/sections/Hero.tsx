@@ -130,11 +130,11 @@ export default function Hero() {
             >
               <div className="relative w-full h-full bg-[var(--bg-secondary)] overflow-hidden">
                 <Image
-                  src="/gallery/48.webp"
-                  alt="Portrait"
+                  src="/hero.jpg"
+                  alt="Nithishkumar Portrait"
                   fill
                   priority
-                  style={{ objectFit: "cover", objectPosition: "center top", filter: "grayscale(10%) contrast(1.1)" }}
+                  style={{ objectFit: "cover", objectPosition: "center top" }}
                   sizes="(max-width: 1024px) 80vw, 33vw"
                 />
               </div>

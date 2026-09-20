@@ -1,34 +1,36 @@
 "use client";
-import { motion, AnimatePresence, useSpring, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
-
-// Animated counter that springs to target value
-function AnimatedNumber({ value }: { value: number }) {
-  const spring = useSpring(0, { stiffness: 60, damping: 18 });
-  const display = useTransform(spring, (v) => String(Math.floor(v)).padStart(2, "0"));
-
-  useEffect(() => {
-    spring.set(value);
-  }, [value, spring]);
-
-  return (
-    <motion.span style={{ fontVariantNumeric: "tabular-nums" }}>
-      {display}
-    </motion.span>
-  );
-}
 
 export default function LoadingScreen() {
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
 
+  // The number element ref — used to measure its rendered width
+  // so we can offset it and prevent viewport clipping at 100%
+  const numberRef = useRef<HTMLDivElement>(null);
+
+  // Raw motion value for the X position (pixels)
+  const rawX = useMotionValue(0);
+  // Spring-smooth the X for buttery movement
+  const smoothX = useSpring(rawX, { stiffness: 40, damping: 20, mass: 0.8 });
+
+  // Recalculate X whenever progress changes
   useEffect(() => {
-    // Smooth, realistic loading counter that eases at the end
+    const el = numberRef.current;
+    const elWidth = el ? el.offsetWidth : 120; // fallback
+    const vw = window.innerWidth;
+    const padding = 32; // 8px * 4 = matching bottom-8 on mobile, we use 32px each side
+    const travelWidth = vw - elWidth - padding * 2;
+    const newX = (progress / 100) * travelWidth;
+    rawX.set(newX);
+  }, [progress, rawX]);
+
+  useEffect(() => {
     let current = 0;
     const target = 100;
 
     const tick = () => {
-      // Slow down as it approaches 100
       const remaining = target - current;
       const increment = Math.max(0.5, remaining * 0.04 + Math.random() * 2);
       current = Math.min(target, current + increment);
@@ -37,7 +39,6 @@ export default function LoadingScreen() {
       if (current < target) {
         setTimeout(tick, 40 + Math.random() * 60);
       } else {
-        // Hold at 100 briefly then exit
         setTimeout(() => setLoading(false), 600);
       }
     };
@@ -91,17 +92,23 @@ export default function LoadingScreen() {
             </motion.h1>
           </div>
 
-          {/* Bottom-left: Big animated counter number */}
-          <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-              className="text-[4rem] sm:text-[6rem] md:text-[8rem] font-black font-sans tracking-tighter leading-none text-[var(--text-primary,#1a1a1a)] tabular-nums"
-            >
-              <AnimatedNumber value={progress} />
-            </motion.div>
-          </div>
+          {/* Bottom: Travelling progress number — moves left → right with progress */}
+          <motion.div
+            ref={numberRef}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            style={{
+              x: smoothX,
+              position: "absolute",
+              bottom: "32px",
+              left: "32px",
+              willChange: "transform",
+            }}
+            className="text-[4rem] sm:text-[6rem] md:text-[8rem] font-black font-sans tracking-tighter leading-none text-[var(--text-primary,#1a1a1a)] tabular-nums select-none whitespace-nowrap"
+          >
+            {String(progress).padStart(2, "0")}
+          </motion.div>
 
           {/* Bottom-right: Thin horizontal loading bar */}
           <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12 flex items-center gap-4">

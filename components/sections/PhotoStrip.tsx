@@ -2,86 +2,100 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Images } from "lucide-react";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
 
-// 5 curated pools of images for each circle to cycle through automatically
+import { LiquidGlassText } from "@/components/ui/LiquidGlassText";
+
 const photoPools = [
-  ['/gallery/49.jpg', '/gallery/1.jpg', '/gallery/11.jpg', '/gallery/20.JPG', '/gallery/33.webp', '/gallery/61.JPG'],
-  ['/gallery/29.jpg', '/gallery/2.jpg', '/gallery/22.jpg', '/gallery/26.JPG', '/gallery/36.webp', '/gallery/62.JPG'],
-  ['/gallery/63.JPG', '/gallery/3.JPG', '/gallery/24.jpg', '/gallery/27.JPG', '/gallery/42.webp', '/gallery/65.jpg'],
-  ['/gallery/54.jpg', '/gallery/4.jpg', '/gallery/25.jpg', '/gallery/28.jpg', '/gallery/43.webp', '/gallery/66.jpg'],
-  ['/gallery/62.JPG', '/gallery/5.png', '/gallery/30.jpg', '/gallery/34.jpg', '/gallery/46.webp', '/gallery/67.jpg'],
+  ['/gallery/49.jpg', '/gallery/1.jpg',  '/gallery/11.jpg', '/gallery/20.JPG', '/gallery/33.webp', '/gallery/61.JPG'],
+  ['/gallery/29.jpg', '/gallery/2.jpg',  '/gallery/22.jpg', '/gallery/26.JPG', '/gallery/36.webp', '/gallery/62.JPG'],
+  ['/gallery/63.JPG', '/gallery/3.JPG',  '/gallery/24.jpg', '/gallery/27.JPG', '/gallery/42.webp', '/gallery/65.jpg'],
+  ['/gallery/54.jpg', '/gallery/4.jpg',  '/gallery/25.jpg', '/gallery/28.jpg', '/gallery/43.webp', '/gallery/66.jpg'],
+  ['/gallery/62.JPG', '/gallery/5.png',  '/gallery/30.jpg', '/gallery/34.jpg', '/gallery/46.webp', '/gallery/67.jpg'],
 ];
 
 export default function PhotoStrip() {
   const { isMobile } = useBreakpoint();
   const containerRef = useRef<HTMLElement>(null);
-
-  // Track active photo index for each of the 5 circles
   const [activeIndices, setActiveIndices] = useState([0, 0, 0, 0, 0]);
 
-  // Automatically cycle photos in the circles
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndices((prev) =>
-        prev.map((idx, circleIdx) => (idx + 1) % photoPools[circleIdx].length)
+        prev.map((idx, ci) => (idx + 1) % photoPools[ci].length)
       );
     }, 3000);
-
     return () => clearInterval(interval);
   }, []);
 
-  // Hook into scroll position of page
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
   });
 
-  // Map scroll progress (0 to 1) to rotation degrees (0 to 360)
-  const rotateClockwise = useTransform(scrollYProgress, [0, 1], [0, 360]);
+  const rotateClockwise     = useTransform(scrollYProgress, [0, 1], [0,  360]);
   const rotateAntiClockwise = useTransform(scrollYProgress, [0, 1], [0, -360]);
 
-  // Bigger size filled inside circle
-  const photoSize = isMobile ? 180 : 270;
+  const photoSize = isMobile ? 170 : 260;
 
   return (
     <section
       id="gallery"
       ref={containerRef}
-      style={{
-        background: "transparent",
-        padding: isMobile ? "80px 0" : "120px 0",
-        position: "relative",
-        overflow: "hidden",
-      }}
+      className="relative bg-[var(--bg-primary)] border-b border-[var(--border-subtle)] overflow-hidden"
+      style={{ padding: isMobile ? "80px 0 100px" : "clamp(80px, 12vw, 140px) 0" }}
     >
-      {/* Top line */}
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent, rgba(59,130,246,0.3), transparent)" }} />
-
-      {/* Header */}
+      {/* ── Centered Editorial Header ── */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7 }}
-        style={{ textAlign: "center", marginBottom: isMobile ? "50px" : "80px", padding: "0 20px" }}
+        className="flex flex-col items-center text-center px-6"
+        style={{ marginBottom: isMobile ? "56px" : "clamp(56px, 8vw, 100px)" }}
       >
-        <span className="section-label" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", marginBottom: "16px" }}>
-          <Images size={12} /> Visual Works
-        </span>
-        <h2 style={{ fontSize: isMobile ? "2.2rem" : "clamp(2.5rem,5vw,3.5rem)", fontWeight: 900, color: "var(--text-primary)", margin: 0 }}>
-          Watch My{" "}
-          <span className="gradient-text-cyan">Stuff</span>
-        </h2>
-        <p style={{ marginTop: "12px", fontSize: "14px", color: "var(--text-secondary)" }}>
+        {/* Eyebrow */}
+        <motion.span
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="metadata text-[var(--text-muted)] block"
+          style={{ marginBottom: "clamp(20px, 3vw, 32px)", letterSpacing: "0.2em" }}
+        >
+          VISUAL WORKS
+        </motion.span>
+
+        {/* Main Heading */}
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="font-heading font-bold uppercase tracking-tighter text-[var(--text-primary)] leading-none"
+          style={{ fontSize: "clamp(2.5rem, 7vw, 5.5rem)", marginBottom: "clamp(16px, 2vw, 24px)", position: "relative", zIndex: 10 }}
+        >
+          <LiquidGlassText text="Watch My Stuff" />
+        </motion.h2>
+
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.25 }}
+          className="font-serif italic text-[var(--text-secondary)]"
+          style={{ fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)" }}
+        >
           Curated Captures · Auto-cycling · Scroll-reactive
-        </p>
+        </motion.p>
       </motion.div>
 
-      {/* 5 Big Circles Row */}
+      {/* ── 5 Rotating Photo Circles ── */}
       <div className="w-full max-w-[1500px] mx-auto px-4 md:px-8">
-        <div className="flex flex-row justify-center gap-6 md:gap-8 lg:gap-10 items-center flex-wrap xl:flex-nowrap">
+        <div className="flex flex-row justify-center items-center flex-wrap xl:flex-nowrap"
+          style={{ gap: isMobile ? "20px" : "clamp(20px, 3vw, 48px)" }}
+        >
           {photoPools.map((pool, idx) => {
             const rotation = idx % 2 === 0 ? rotateClockwise : rotateAntiClockwise;
             const currentSrc = pool[activeIndices[idx]];
@@ -96,17 +110,17 @@ export default function PhotoStrip() {
                   borderRadius: "50%",
                   overflow: "hidden",
                   flexShrink: 0,
-                  border: "3px solid var(--text-primary)",
-                  boxShadow: "0 12px 36px rgba(0,0,0,0.25)",
-                  filter: "grayscale(100%)",
+                  border: "2px solid var(--border-subtle)",
                   rotate: rotation,
                 }}
                 whileHover={{
                   filter: "grayscale(0%)",
-                  scale: 1.08,
-                  borderColor: "var(--accent-blue)",
-                  transition: { duration: 0.3 }
+                  scale: 1.06,
+                  borderColor: "var(--text-primary)",
+                  transition: { duration: 0.35 },
                 }}
+                initial={{ filter: "grayscale(100%)" }}
+                animate={{ filter: "grayscale(100%)" }}
               >
                 <AnimatePresence mode="popLayout">
                   <motion.div
@@ -132,9 +146,6 @@ export default function PhotoStrip() {
           })}
         </div>
       </div>
-
-      {/* Bottom line */}
-      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent, rgba(99,102,241,0.3), transparent)" }} />
     </section>
   );
 }
