@@ -123,19 +123,29 @@ export default function ChatBot() {
           >
             {/* Header */}
             <div
-              className="px-4 py-3 flex items-center gap-3"
+              className="px-4 py-3 flex items-center justify-between"
               style={{ background: "linear-gradient(135deg, rgba(0,217,255,0.1), rgba(139,92,246,0.1))", borderBottom: "1px solid rgba(255,255,255,0.06)" }}
             >
-              <div
-                className="w-9 h-9 rounded-full flex items-center justify-center"
-                style={{ background: "rgba(0,217,255,0.15)" }}
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-9 h-9 rounded-full flex items-center justify-center"
+                  style={{ background: "rgba(0,217,255,0.15)" }}
+                >
+                  <Bot size={18} style={{ color: "var(--accent-cyan)" }} />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-white">Nithish's Assistant</p>
+                  <p className="text-xs" style={{ color: "var(--accent-cyan)" }}>● Online</p>
+                </div>
+              </div>
+              
+              <button 
+                onClick={() => setOpen(false)}
+                className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors"
+                aria-label="Close chatbot"
               >
-                <Bot size={18} style={{ color: "var(--accent-cyan)" }} />
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-white">Nithish's Assistant</p>
-                <p className="text-xs" style={{ color: "var(--accent-cyan)" }}>● Online</p>
-              </div>
+                <X size={16} className="text-white/70 hover:text-white" />
+              </button>
             </div>
 
             {/* Messages */}
