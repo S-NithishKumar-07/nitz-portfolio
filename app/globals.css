@@ -512,3 +512,18 @@ body {
   width: max-content;
 }
 
+
+:root {
+  --bg-0: #050505;
+  --bg-1: #08070B;
+  --bg-2: #0D0A12;
+  --bg-3: #14101A;
+  --white: #FFFFFF;
+  --off-white: #F0EEFF;
+  --grey-1: #D4D0DC;
+  --grey-2: #8A8595;
+  --grey-3: #50485C;
+  --line: rgba(255,255,255,0.07);
+  --section-y: clamp(100px, 13vw, 180px);
+}
+

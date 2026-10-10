@@ -1,112 +1,258 @@
 "use client";
-import { useState } from "react";
-import { Copy, Check, ArrowUp } from "lucide-react";
-import { FaLinkedin, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { motion } from "framer-motion";
 import { personalInfo } from "@/lib/data";
 
-import { LiquidGlassText } from "@/components/ui/LiquidGlassText";
-
-const WA_NUMBER = "916374025197";
+const WHATSAPP_NUMBER = "919080706050"; // Replace with actual number
+const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
+const LINKEDIN_URL = personalInfo.socials.linkedin;
+const INSTAGRAM_URL = personalInfo.socials.instagram;
 
 export default function Contact() {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(personalInfo.email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
-    <section id="contact" className="relative bg-[var(--bg-primary)] border-b border-[var(--border-subtle)] flex flex-col justify-between min-h-[85vh]" style={{ paddingTop: "clamp(80px, 12vw, 140px)", paddingBottom: "clamp(60px, 8vw, 100px)" }}>
-      <div className="e-container w-full flex-1 flex flex-col items-center justify-center">
-        
-        {/* Main Content (Centered) */}
-        <div className="flex flex-col items-center justify-center text-center w-full max-w-6xl mx-auto flex-1 my-auto">
+    <section
+      id="contact"
+      style={{
+        backgroundColor: "var(--bg-0)",
+        paddingTop: "clamp(80px, 10vw, 150px)",
+        paddingBottom: "clamp(80px, 10vw, 150px)",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      {/* Subtle radial gradient behind Let's Talk */}
+      <div 
+        aria-hidden="true" 
+        style={{
+          position: "absolute",
+          top: "30%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "1000px",
+          height: "1000px",
+          background: "radial-gradient(circle at 50% 50%, rgba(90, 55, 140, 0.08) 0%, transparent 60%)",
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      />
+
+      <div className="container" style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <span style={{ 
+            fontFamily: "var(--font-body)", fontSize: "0.65rem", fontWeight: 700, 
+            textTransform: "uppercase", letterSpacing: "0.22em", color: "var(--grey-2)",
+            marginBottom: "16px", display: "block" 
+          }}>
+            Next Steps
+          </span>
           
-          <h3 className="metadata text-[var(--text-primary)]" style={{ marginBottom: "clamp(40px, 6vw, 60px)", letterSpacing: "0.2em" }}>
-            GOT A PROJECT IN MIND?
-          </h3>
-          
-          {/* Continuous Single-Line Email & Copy */}
-          <div className="flex flex-col items-center w-full" style={{ gap: "clamp(40px, 6vw, 80px)", marginBottom: "clamp(60px, 10vw, 100px)" }}>
-            <a
-              href={`mailto:${personalInfo.email}`}
-              className="font-serif tracking-tight text-[var(--text-primary)]"
-              style={{ fontSize: "clamp(1.5rem, 5vw, 6rem)", wordBreak: "keep-all", display: "inline-block", position: "relative", zIndex: 10 }}
-            >
-              <LiquidGlassText text={personalInfo.email} />
-            </a>
-            
-            <button
-              onClick={handleCopy}
-              className="group relative flex items-center justify-center rounded-full border border-[var(--border-subtle)] bg-[var(--bg-primary)] text-[var(--text-primary)] text-[11px] font-bold uppercase tracking-widest hover:border-[var(--text-primary)] transition-all duration-300 shrink-0"
-              style={{ padding: "12px 32px" }}
-            >
-              {copied ? (
-                <span className="flex items-center gap-2"><Check size={14} /> COPIED</span>
-              ) : (
-                <span className="flex items-center gap-2"><Copy size={14} /> COPY EMAIL</span>
-              )}
-            </button>
+          <div style={{ position: "relative", display: "inline-block" }}>
+            {/* Soft blurred glow behind text */}
+            <div style={{
+              position: "absolute", inset: 0,
+              background: "radial-gradient(circle, rgba(150,110,220,0.15) 0%, transparent 70%)",
+              filter: "blur(20px)", zIndex: -1, pointerEvents: "none"
+            }} />
+            <h2 style={{
+              fontFamily: "var(--font-heading)",
+              fontWeight: 800,
+              fontSize: "clamp(3rem, 8vw, 6rem)",
+              letterSpacing: "-0.04em",
+              textTransform: "uppercase",
+              color: "var(--off-white)",
+              marginBottom: "16px",
+              lineHeight: 1,
+            }}>
+              LET&apos;S TALK
+            </h2>
           </div>
 
-          {/* Social Links (Clean minimal typographic) */}
-          <div className="flex items-center justify-center flex-wrap w-full border-t border-[var(--border-subtle)]" style={{ gap: "clamp(24px, 4vw, 64px)", paddingTop: "clamp(40px, 6vw, 80px)" }}>
-            <a
-              href={`https://wa.me/${WA_NUMBER}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="metadata flex items-center gap-2 text-[var(--text-primary)] hover:text-[var(--text-muted)] transition-colors"
-            >
-              <FaWhatsapp size={16} /> WHATSAPP
-            </a>
-
-            <a
-              href={personalInfo.socials.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="metadata flex items-center gap-2 text-[var(--text-primary)] hover:text-[var(--text-muted)] transition-colors"
-            >
-              <FaLinkedin size={16} /> LINKEDIN
-            </a>
-
-            <a
-              href={personalInfo.socials.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="metadata flex items-center gap-2 text-[var(--text-primary)] hover:text-[var(--text-muted)] transition-colors"
-            >
-              <FaInstagram size={16} /> INSTAGRAM
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Minimalist Footer */}
-      <div className="e-container w-full mt-32">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-t border-[var(--border-subtle)] pt-8">
-          <p className="metadata text-[var(--text-muted)]">
-            © {new Date().getFullYear()} NITHISHKUMAR
+          <p style={{ 
+            fontFamily: "var(--font-body)", fontSize: "clamp(0.875rem, 1.1vw, 1rem)", 
+            lineHeight: 1.85, color: "var(--grey-1)",
+            maxWidth: "500px", margin: "0 auto 40px" 
+          }}>
+            I am currently open to new opportunities, collaborations, and interesting projects. Whether you have a question or just want to say hi, my inbox is open.
           </p>
-          
-          <button
-            onClick={scrollToTop}
-            className="w-12 h-12 rounded-full border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-primary)] hover:border-[var(--text-primary)] transition-colors"
-            aria-label="Back to top"
+
+          <button 
+            onClick={() => window.open(WHATSAPP_URL, "_blank")}
+            className="contact-main-btn"
+            data-cursor="hover"
           >
-            <ArrowUp size={16} />
+            LET&apos;S TALK ON WHATSAPP ↗
           </button>
+        </motion.div>
 
-          <p className="metadata text-[var(--text-muted)]">
-            BASED IN TAMIL NADU, INDIA
-          </p>
-        </div>
+        {/* Social Cards */}
+        <motion.div 
+          className="social-grid"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          {/* WhatsApp Card */}
+          <div className="social-card" onClick={() => window.open(WHATSAPP_URL, "_blank")}>
+            <div className="sc-glow" />
+            <span className="sc-label">WHATSAPP</span>
+            <h3 className="sc-title">Let&apos;s chat</h3>
+            <p className="sc-desc">Start a conversation <span className="sc-arrow">→</span></p>
+          </div>
+
+          {/* LinkedIn Card */}
+          <div className="social-card" onClick={() => window.open(LINKEDIN_URL, "_blank")}>
+            <div className="sc-glow" />
+            <span className="sc-label">LINKEDIN</span>
+            <h3 className="sc-title">Professional network</h3>
+            <p className="sc-desc">Connect with me <span className="sc-arrow">→</span></p>
+          </div>
+
+          {/* Instagram Card */}
+          <div className="social-card" onClick={() => window.open(INSTAGRAM_URL, "_blank")}>
+            <div className="sc-glow" />
+            <span className="sc-label">INSTAGRAM</span>
+            <h3 className="sc-title">Visual work &amp; BTS</h3>
+            <p className="sc-desc">Follow my work <span className="sc-arrow">→</span></p>
+          </div>
+        </motion.div>
       </div>
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 clamp(24px, 4vw, 64px); }
+        
+        .contact-main-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 18px 40px;
+          background: transparent;
+          border: 1px solid rgba(150,110,220,0.5);
+          color: var(--off-white);
+          font-family: var(--font-body);
+          font-size: 0.75rem;
+          font-weight: 700;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          text-decoration: none;
+          border-radius: 4px;
+          cursor: none;
+          transition: all 0.4s ease;
+          margin-bottom: clamp(60px, 8vw, 100px);
+        }
+        .contact-main-btn:hover {
+          background: rgba(120,60,200,0.1);
+          border-color: rgba(150,110,220,0.8);
+          box-shadow: 0 0 20px rgba(120,60,200,0.2);
+          transform: translateY(-2px);
+        }
+
+        .social-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 24px;
+          text-align: left;
+        }
+
+        .social-card {
+          position: relative;
+          background: rgba(255,255,255,0.01);
+          border: 1px solid rgba(255,255,255,0.04);
+          border-radius: 8px;
+          padding: 32px 24px;
+          cursor: none;
+          overflow: hidden;
+          transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+          display: flex;
+          flex-direction: column;
+        }
+
+        .sc-glow {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at 50% 100%, rgba(120,60,200,0.15) 0%, transparent 60%);
+          opacity: 0;
+          transition: opacity 0.5s ease;
+          pointer-events: none;
+        }
+
+        .social-card:hover {
+          transform: translateY(-4px);
+          border-color: rgba(150,110,220,0.3);
+          background: rgba(255,255,255,0.02);
+          box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        }
+        
+        .social-card:hover .sc-glow {
+          opacity: 1;
+        }
+
+        .social-card::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 50%);
+          opacity: 0;
+          transition: opacity 0.4s ease;
+          pointer-events: none;
+        }
+        .social-card:hover::after {
+          opacity: 1;
+        }
+
+        .sc-label {
+          font-family: var(--font-body);
+          font-size: 0.6rem;
+          font-weight: 700;
+          letter-spacing: 0.2em;
+          color: var(--grey-3);
+          margin-bottom: 16px;
+          transition: color 0.3s;
+        }
+
+        .sc-title {
+          font-family: var(--font-heading);
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: var(--off-white);
+          margin-bottom: 8px;
+        }
+
+        .sc-desc {
+          font-family: var(--font-body);
+          font-size: 0.85rem;
+          color: var(--grey-1);
+          margin-top: auto;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+
+        .sc-arrow {
+          color: rgba(150,110,220,0.7);
+          transition: transform 0.3s ease;
+        }
+
+        .social-card:hover .sc-label {
+          color: rgba(150,110,220,0.8);
+        }
+
+        .social-card:hover .sc-arrow {
+          transform: translateX(4px);
+          color: var(--off-white);
+        }
+
+        @media (max-width: 900px) {
+          .social-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+          }
+        }
+      `}} />
     </section>
   );
 }
