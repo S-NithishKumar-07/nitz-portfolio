@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { personalInfo } from "@/lib/data";
 
-const WHATSAPP_NUMBER = "919080706050"; // Replace with actual number
+const WHATSAPP_NUMBER = "916374025197";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
 const LINKEDIN_URL = personalInfo.socials.linkedin;
 const INSTAGRAM_URL = personalInfo.socials.instagram;
